@@ -17,6 +17,9 @@ struct sClient {
 	bool MarkForDelete = false;
 };
 
+enum enColor{
+	Red = 1 , White = 2
+};
 enum enMainMenuOption {
 	eClientList = 1, eClientAdd = 2, eClientDelete = 3, eClientUpdate = 4, eClientFind = 5, eTransactions = 6, eExit = 7
 };
@@ -35,6 +38,16 @@ void ResetScreen() {
 	system("cls");
 
 }
+
+void ChangeColorText(enColor Color) {
+	switch (Color) {
+	case enColor::Red:
+		system("color 04"); break;
+	case enColor::White:
+		system("color 07"); break;
+	   }
+}
+
 void GoBackToMainMenu() {
 
 	cout << "\n\nPress Any Key To go back to Main Menu...";
@@ -517,25 +530,35 @@ short CheckNumberValidation(string Message, short From, short To)
 
 	cin >> Number;
 
-	while (cin.fail())
+
+	while (cin.fail() || (Number < From || Number > To))
 	{
 
-		cin.clear();
+		ChangeColorText(enColor::Red);
 
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		if (!cin.fail())
+		{
 
-		cout << Message << endl;
+			cout << "Invalid Input Please Choose Numbers Between 1 to " << To << "\n";
 
-		cin >> Number;
+			cin >> Number;
+
+		}
+		else
+		{
+			cin.clear();
+
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+			cout << Message << endl;
+
+			cin >> Number;
+
+		}
+
 	}
 
-	while (Number < From || Number > To) {
-
-		cout << "Invalid Number Please Choose Numbers Between 1 to " << To << "\n";
-
-		cin >> Number;
-
-	}
+	ChangeColorText(enColor::White);
 
 	return Number;
 }
@@ -570,22 +593,40 @@ double ReadAmount()
 	cout << "\nPlease enter deposit amount? ";
 
 	cin >> DepositAmount;
-	while (cin.fail()) {
-		cin.clear();
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << "This is Not Number , Please Enter a Number?\n";
-		cin >> DepositAmount;
-	}
-
-	while (DepositAmount <= 0)
+	while (cin.fail() || (DepositAmount <= 0))
 	{
-		cout << "Can't Input Number " << DepositAmount << " Because it Negative"
-			<< " Please Enter Number Greater Than 0?\n";
-		cin >> DepositAmount;
+
+		ChangeColorText(enColor::Red);
+
+		if (!cin.fail())
+		{
+
+			cout << "Invalid Input Please Enter a Number? ";
+
+			cin >> DepositAmount;
+
+		}
+		else
+		{
+			cin.clear();
+
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+			cout << "The Amount Can't Be Zero or Less Please Enter Amount Greater than Zero? " << endl;
+
+			cin >> DepositAmount;
+
+		}
+
 	}
 
+
+
+	ChangeColorText(enColor::White);
 	return DepositAmount;
 }
+
+
 
 bool DepositBalanceToClientByAccountNumber(vector<sClient>& vClients, double Amount, string AccountNumber) {
 
@@ -647,7 +688,7 @@ void DepositOperationScreen() {
 	DepositClient();
 
 }
-
+ 
 void WithDrawOperation() {
 
 	vector<sClient> vClients = LoadClientsDataFromFile(ClientsFileName);
