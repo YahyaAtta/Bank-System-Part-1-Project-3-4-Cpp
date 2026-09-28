@@ -530,7 +530,6 @@ short CheckNumberValidation(string Message, short From, short To)
 
 	cin >> Number;
 
-	ChangeColorText(enColor::Red); 
 
 	while (cin.fail())
 	{
@@ -538,7 +537,8 @@ short CheckNumberValidation(string Message, short From, short To)
 		cin.clear();
 
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
+		
+	ChangeColorText(enColor::Red); 
 		cout << Message << endl;
 
 		cin >> Number;
@@ -586,10 +586,10 @@ double ReadAmount()
 	cout << "\nPlease enter deposit amount? ";
 
 	cin >> DepositAmount;
-	ChangeColorText(enColor::Red); 
 	while (cin.fail()) {
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		ChangeColorText(enColor::Red); 
 		cout << "This is Not Number , Please Enter a Number?\n";
 		cin >> DepositAmount;
 	}
