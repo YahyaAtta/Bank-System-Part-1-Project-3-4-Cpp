@@ -17,6 +17,9 @@ struct sClient {
 	bool MarkForDelete = false;
 };
 
+enum enColor{
+	Red = 1 , White = 2
+};
 enum enMainMenuOption {
 	eClientList = 1, eClientAdd = 2, eClientDelete = 3, eClientUpdate = 4, eClientFind = 5, eTransactions = 6, eExit = 7
 };
@@ -35,6 +38,16 @@ void ResetScreen() {
 	system("cls");
 
 }
+
+void ChangeColorText(enColor Color) {
+	switch (Color) {
+	case enColor::Red:
+		system("color 04"); break;
+	case enColor::White:
+		system("color 07"); break;
+	   }
+}
+
 void GoBackToMainMenu() {
 
 	cout << "\n\nPress Any Key To go back to Main Menu...";
@@ -517,6 +530,8 @@ short CheckNumberValidation(string Message, short From, short To)
 
 	cin >> Number;
 
+	ChangeColorText(enColor::Red); 
+
 	while (cin.fail())
 	{
 
@@ -536,6 +551,7 @@ short CheckNumberValidation(string Message, short From, short To)
 		cin >> Number;
 
 	}
+	ChangeColorText(enColor::White); 
 
 	return Number;
 }
@@ -570,6 +586,7 @@ double ReadAmount()
 	cout << "\nPlease enter deposit amount? ";
 
 	cin >> DepositAmount;
+	ChangeColorText(enColor::Red); 
 	while (cin.fail()) {
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -583,7 +600,7 @@ double ReadAmount()
 			<< " Please Enter Number Greater Than 0?\n";
 		cin >> DepositAmount;
 	}
-
+	ChangeColorText(enColor::White); 
 	return DepositAmount;
 }
 
