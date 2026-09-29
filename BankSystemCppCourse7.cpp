@@ -601,7 +601,7 @@ double ReadAmount()
 		if(!cin.fail())
 		{
 			
-	   cout << "Invalid Input Please Enter a Number? " << To << "\n";
+	   cout << "Invalid Input Please Enter a Number? ";
 			
 		cin >> DepositAmount;
 			
