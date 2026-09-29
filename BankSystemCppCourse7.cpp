@@ -531,26 +531,33 @@ short CheckNumberValidation(string Message, short From, short To)
 	cin >> Number;
 
 
-	while (cin.fail())
+	while (cin.fail() || (Number < From || Number > To))
 	{
-
+		
+      ChangeColorText(enColor::Red); 
+		
+		if(!cin.fail())
+		{
+			
+	   cout << "Invalid Number Please Choose Numbers Between 1 to " << To << "\n";
+			
+		cin >> Number;
+			
+		}
+	else 
+		{
 		cin.clear();
 
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		
-	ChangeColorText(enColor::Red); 
+
 		cout << Message << endl;
 
 		cin >> Number;
+			
+		}
+		
 	}
 
-	while (Number < From || Number > To) {
-
-		cout << "Invalid Number Please Choose Numbers Between 1 to " << To << "\n";
-
-		cin >> Number;
-
-	}
 	ChangeColorText(enColor::White); 
 
 	return Number;
