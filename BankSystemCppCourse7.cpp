@@ -539,7 +539,7 @@ short CheckNumberValidation(string Message, short From, short To)
 		if(!cin.fail())
 		{
 			
-	   cout << "Invalid Number Please Choose Numbers Between 1 to " << To << "\n";
+	   cout << "Invalid Input Please Choose Numbers Between 1 to " << To << "\n";
 			
 		cin >> Number;
 			
@@ -593,20 +593,35 @@ double ReadAmount()
 	cout << "\nPlease enter deposit amount? ";
 
 	cin >> DepositAmount;
-	while (cin.fail()) {
-		cin.clear();
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		ChangeColorText(enColor::Red); 
-		cout << "This is Not Number , Please Enter a Number?\n";
+	while (cin.fail() || (DepositAmount<=0))
+	{
+		
+      ChangeColorText(enColor::Red); 
+		
+		if(!cin.fail())
+		{
+			
+	   cout << "Invalid Input Please Enter a Number? " << To << "\n";
+			
 		cin >> DepositAmount;
+			
+		}
+	else 
+		{
+		cin.clear();
+
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+		cout << "The Amount Can't Be Zero or Less Please Enter Amount Greater than Zero? " << endl;
+
+		cin >> DepositAmount;
+			
+		}
+		
 	}
 
-	while (DepositAmount <= 0)
-	{
-		cout << "Can't Input Number " << DepositAmount << " Because it Negative"
-			<< " Please Enter Number Greater Than 0?\n";
-		cin >> DepositAmount;
-	}
+
+
 	ChangeColorText(enColor::White); 
 	return DepositAmount;
 }
